@@ -1,0 +1,208 @@
+:root {
+    --bg-color: #1e1e1e;
+    --sidebar-bg: #252526;
+    --editor-bg: #1e1e1e;
+    --tab-bg: #2d2d2d;
+    --tab-active-bg: #1e1e1e;
+    --status-bar-bg: #007acc;
+    --text-color: #d4d4d4;
+    --border-color: #3c3c3c;
+    --folder-hover: #37373d;
+    --file-active: #37373d;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .editor-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 250px;
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .sidebar-header {
+    padding: 10px;
+    font-size: 0.8rem;
+    color: #8a8a8a;
+  }
+  
+  .file-explorer {
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+  
+  .folder {
+    padding: 5px 0;
+  }
+  
+  .folder-name {
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .folder-name:hover {
+    background-color: var(--folder-hover);
+  }
+  
+  .folder-icon,
+  .file-icon {
+    margin-right: 5px;
+  }
+  
+  .files {
+    padding-left: 20px;
+  }
+  
+  .file {
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .file:hover {
+    background-color: var(--folder-hover);
+  }
+  
+  .file.active {
+    background-color: var(--file-active);
+  }
+  
+  /* Main content styles */
+  .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  .tabs {
+    display: flex;
+    background-color: var(--tab-bg);
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .tab {
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  
+  .tab.active {
+    background-color: var(--tab-active-bg);
+    border-bottom: 1px solid var(--status-bar-bg);
+  }
+  
+  .close-btn {
+    margin-left: 8px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .close-btn:hover {
+    color: white;
+  }
+  
+  .editor-wrapper {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  /* CodeMirror customization */
+  .CodeMirror {
+    height: 100% !important;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  
+  .CodeMirror-gutters {
+    background-color: var(--editor-bg) !important;
+    border-right: 1px solid var(--border-color) !important;
+  }
+  
+  .CodeMirror-linenumber {
+    color: #858585 !important;
+  }
+  
+  /* Status bar styles */
+  .status-bar {
+    height: 22px;
+    background-color: var(--status-bar-bg);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+    font-size: 0.8rem;
+    align-items: center;
+  }
+  
+  .status-left,
+  .status-right {
+    display: flex;
+    gap: 15px;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 180px;
+    }
+  
+    .folder-name,
+    .file {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .sidebar {
+      width: 50px;
+    }
+  
+    .sidebar-header,
+    .folder-name span:not(.folder-icon),
+    .file span:not(.file-icon) {
+      display: none;
+    }
+  
+    .files {
+      padding-left: 5px;
+    }
+  
+    .folder-icon,
+    .file-icon {
+      margin-right: 0;
+      font-size: 1.2rem;
+    }
+  }
+  
+  

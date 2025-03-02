@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Editor</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
+</head>
+<body>
+  <div class="editor-container">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3>EXPLORER</h3>
+      </div>
+      <div class="file-explorer">
+        <div class="folder">
+          <div class="folder-name">
+            <span class="folder-icon">📁</span>
+            <span>Project</span>
+          </div>
+          <div class="files">
+            <div class="file active">
+              <span class="file-icon">📄</span>
+              <span>index.html</span>
+            </div>
+            <div class="file">
+              <span class="file-icon">📄</span>
+              <span>style.css</span>
+            </div>
+            <div class="file">
+              <span class="file-icon">📄</span>
+              <span>script.js</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="tabs">
+        <div class="tab active">
+          <span>index.html</span>
+          <button class="close-btn">×</button>
+        </div>
+        <div class="tab">
+          <span>style.css</span>
+          <button class="close-btn">×</button>
+        </div>
+      </div>
+      <div class="editor-wrapper">
+        <textarea id="code-editor"></textarea>
+      </div>
+      <div class="status-bar">
+        <div class="status-left">
+          <span class="language-mode">HTML</span>
+          <span class="encoding">UTF-8</span>
+        </div>
+        <div class="status-right">
+          <span class="line-col">Ln 1, Col 1</span>
+          <span class="indent-type">Spaces: 2</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/clike/clike.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
