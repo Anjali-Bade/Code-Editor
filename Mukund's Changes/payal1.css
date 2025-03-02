@@ -1,0 +1,52 @@
+.footer{
+    height:100%;
+    width:100%;
+    background-color: black;
+    margin-top:10px;
+ }
+ .text1{
+    margin-left:623px;
+    font-size:13px;
+    color:white;
+    text-decoration: none;
+ }
+ .text2{
+    margin-left:23px;
+    font-size:13px;
+    color:white;
+    text-decoration: none;
+
+ }
+ .fa-solid{
+  color:white;
+  margin-left:8px;
+ }
+ .fa-regular{
+    color:white;
+    margin-left:px;
+    margin-top:4px;
+ }
+ .text0{
+    margin-left: 20px;
+    font-size:12px;
+    color:white;
+ }
+ .icon1{
+    color:white;
+
+ }
+ a:hover{
+    background-color:rgb(58, 58, 58);
+ }
+ .button1{
+margin-left:11px;
+height:23px;
+width:3%;
+background-color:rgb(92, 158, 234);
+ }
+body{
+   display: flex;
+   justify-content:center;
+   align-items:center;
+   height:100vh
+}
