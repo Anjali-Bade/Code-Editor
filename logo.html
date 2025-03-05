@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Code Editor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="loader"></div>
+    <div class="main">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="actions">
+                    <h3><i class="fas fa-folder-open"></i> Explorer</h3> <br>
+                    <button id="add-folder"><i class="fas fa-folder-plus"></i> Folder</button>
+                    <button id="add-file"><i class="fas fa-file-code"></i> File</button>
+                </div>
+            </div>
+            <ul class="file-tree" id="file-tree"></ul>
+        </div>
+
+        <div id="editor-container">
+            <div class="editor-tabs">
+                <div class="tab active" data-editor="html">HTML</div>
+                <div class="tab" data-editor="css">CSS</div>
+                <div class="tab" data-editor="js">JS</div>
+            </div>
+            <div class="editor-wrapper" data-editor="html">
+                <div class="line-numbers" id="html-line-numbers">1</div>
+                <textarea id="html-editor" class="editor" placeholder="// Write HTML here" disabled></textarea>
+            </div>
+            <div class="editor-wrapper" data-editor="css" style="display: none;">
+                <div class="line-numbers" id="css-line-numbers">1</div>
+                <textarea id="css-editor" class="editor" placeholder="// Write CSS here" disabled></textarea>
+            </div>
+            <div class="editor-wrapper" data-editor="js" style="display: none;">
+                <div class="line-numbers" id="js-line-numbers">1</div>
+                <textarea id="js-editor" class="editor" placeholder="// Write JavaScript here" disabled></textarea>
+            </div>
+        </div>
+
+        <div class="outputscreen">
+            <div class="output-header">
+                <h3><i class="fas fa-play-circle"></i> Live Preview</h3>
+                <div class="controls">
+                    <button id="run"><i class="fas fa-play"></i> Run</button>
+                    <button id="fullscreen"><i class="fas fa-expand"></i> Fullscreen</button>
+                </div>
+            </div>
+            <iframe id="output"></iframe>
+            <div class="console" id="console"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
