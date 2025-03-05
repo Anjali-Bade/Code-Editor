@@ -1,88 +1,193 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // File Manager Code
-    const fileTree = document.getElementById('file-tree');
-    const addFolderButton = document.getElementById('add-folder');
-    const addFileButton = document.getElementById('add-file');
-    const closeAllButton = document.getElementById('close-all');
-    let currentFolder = null;
+document.addEventListener('DOMContentLoaded', () => {
+  const loader = document.querySelector('.loader');
+  const fileTree = document.getElementById('file-tree');
+  const tabs = document.querySelectorAll('.tab');
+  const editors = document.querySelectorAll('.editor-wrapper');
+  const output = document.getElementById('output');
+  const consoleElement = document.getElementById('console');
+  const contextMenu = document.createElement('div');
+  
+  let currentFolder = null;
+  let currentFile = null;
+  let fileSystem = JSON.parse(localStorage.getItem('fileSystem')) || {};
 
-    // Line Numbering System
-    function initializeLineNumbers(editorId, numbersId) {
-        const editor = document.getElementById(editorId);
-        const numbers = document.getElementById(numbersId);
+  contextMenu.className = 'context-menu';
+  document.body.appendChild(contextMenu);
 
-        function updateNumbers() {
-            const lines = editor.value.split('\n').length;
-            numbers.innerHTML = Array(lines).fill()
-                .map((_, i) => `<div>${i + 1}</div>`).join('');
-            numbers.scrollTop = editor.scrollTop;
-        }
+  // File system functions
+  function renderFileTree() {
+      fileTree.innerHTML = '';
+      Object.keys(fileSystem).forEach(folder => {
+          const folderElement = document.createElement('li');
+          folderElement.innerHTML = `
+              <div class="folder-header" data-folder="${folder}">
+                  <span>
+                      <i class="fas fa-folder"></i> ${folder}
+                  </span>
+                  <i class="fas fa-times delete-btn" onclick="deleteFolder('${folder}')"></i>
+              </div>
+              <ul class="file-list"></ul>
+          `;
+          
+          const fileList = folderElement.querySelector('.file-list');
+          fileSystem[folder].forEach(file => {
+              const fileElement = document.createElement('li');
+              fileElement.className = 'file-item';
+              fileElement.innerHTML = `
+                  <span onclick="openFile('${folder}', '${file.name}')">
+                      <i class="fas fa-file-code"></i> ${file.name}
+                  </span>
+                  <i class="fas fa-times delete-btn" 
+                     onclick="deleteFile('${folder}', '${file.name}')"></i>
+              `;
+              fileList.appendChild(fileElement);
+          });
+          fileTree.appendChild(folderElement);
+      });
+  }
 
-        editor.addEventListener('input', updateNumbers);
-        editor.addEventListener('scroll', () => {
-            numbers.scrollTop = editor.scrollTop;
-        });
-        updateNumbers();
-    }
+  function openFile(folder, fileName) {
+      const file = fileSystem[folder].find(f => f.name === fileName);
+      if (file) {
+          currentFolder = folder;
+          currentFile = fileName;
+          document.getElementById('html-editor').value = file.html || '';
+          document.getElementById('css-editor').value = file.css || '';
+          document.getElementById('js-editor').value = file.js || '';
+          document.querySelectorAll('.editor').forEach(editor => editor.disabled = false);
+      }
+  }
 
-    // Initialize line numbers for all editors
-    initializeLineNumbers('html-editor', 'html-line-numbers');
-    initializeLineNumbers('css-editor', 'css-line-numbers');
-    initializeLineNumbers('js-editor', 'js-line-numbers');
+  function saveCurrentFile() {
+      if (currentFolder && currentFile) {
+          const folderFiles = fileSystem[currentFolder];
+          const fileIndex = folderFiles.findIndex(f => f.name === currentFile);
+          if (fileIndex !== -1) {
+              folderFiles[fileIndex].html = document.getElementById('html-editor').value;
+              folderFiles[fileIndex].css = document.getElementById('css-editor').value;
+              folderFiles[fileIndex].js = document.getElementById('js-editor').value;
+              localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
+          }
+      }
+  }
 
-    // Code Execution
-    const htmlEditor = document.getElementById('html-editor');
-    const cssEditor = document.getElementById('css-editor');
-    const jsEditor = document.getElementById('js-editor');
-    const outputFrame = document.getElementById('output');
+  // File/folder operations
+  window.deleteFolder = function(folderName) {
+      if (confirm(`Delete folder "${folderName}" and all its contents?`)) {
+          delete fileSystem[folderName];
+          if (currentFolder === folderName) clearEditors();
+          localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
+          renderFileTree();
+      }
+  }
 
-    function runCode() {
-        const html = htmlEditor.value;
-        const css = `<style>${cssEditor.value}</style>`;
-        const js = `<script>${jsEditor.value}<\/script>`;
-        const output = html + css + js;
+  window.deleteFile = function(folderName, fileName) {
+      if (confirm(`Delete file "${fileName}"?`)) {
+          fileSystem[folderName] = fileSystem[folderName].filter(f => f.name !== fileName);
+          if (currentFile === fileName) clearEditors();
+          localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
+          renderFileTree();
+      }
+  }
 
-        const outputDocument = outputFrame.contentDocument || outputFrame.contentWindow.document;
-        outputDocument.open();
-        outputDocument.write(output);
-        outputDocument.close();
-    }
+  function clearEditors() {
+      currentFolder = currentFile = null;
+      document.getElementById('html-editor').value = '';
+      document.getElementById('css-editor').value = '';
+      document.getElementById('js-editor').value = '';
+      document.querySelectorAll('.editor').forEach(editor => editor.disabled = true);
+  }
 
-    document.getElementById('run-button').addEventListener('click', runCode);
+  // Event listeners
+  document.getElementById('add-folder').addEventListener('click', () => {
+      const folderName = prompt('Enter folder name:');
+      if (folderName) {
+          if (!fileSystem[folderName]) {
+              fileSystem[folderName] = [];
+              localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
+              renderFileTree();
+          } else {
+              alert('Folder already exists!');
+          }
+      }
+  });
 
-    // File Manager Functionality
-    addFolderButton.addEventListener('click', function () {
-        const folderName = prompt('Enter folder name:');
-        if (folderName) {
-            const folder = document.createElement('li');
-            folder.innerHTML = `
-                ${folderName}
-                <button class="close-btn">×</button>
-            `;
-            folder.classList.add('folder');
-            fileTree.appendChild(folder);
-        }
-    });
+  document.getElementById('add-file').addEventListener('click', () => {
+      const folderName = prompt('Enter folder name:');
+      if (folderName && fileSystem[folderName]) {
+          const fileName = prompt('Enter file name:');
+          if (fileName) {
+              fileSystem[folderName].push({ 
+                  name: fileName, 
+                  html: '', 
+                  css: '', 
+                  js: '' 
+              });
+              localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
+              renderFileTree();
+              openFile(folderName, fileName);
+          }
+      } else {
+          alert('Folder does not exist!');
+      }
+  });
 
-    addFileButton.addEventListener('click', function () {
-        const fileName = prompt('Enter file name:');
-        if (fileName) {
-            const file = document.createElement('li');
-            file.innerHTML = `
-                ${fileName}
-                <button class="close-btn">×</button>
-            `;
-            fileTree.appendChild(file);
-        }
-    });
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const editorType = tab.dataset.editor;
+      editors.forEach(editor => {
+          editor.style.display = editor.dataset.editor === editorType ? 'block' : 'none';
+      });
+  }));
 
-    closeAllButton.addEventListener('click', () => {
-        fileTree.innerHTML = '';
-    });
+  document.getElementById('run').addEventListener('click', () => {
+      loader.style.display = 'block';
+      try {
+          const html = document.getElementById('html-editor').value;
+          const css = `<style>${document.getElementById('css-editor').value}</style>`;
+          const js = `<script>${document.getElementById('js-editor').value}<\/script>`;
+          
+          const iframeDoc = output.contentDocument || output.contentWindow.document;
+          iframeDoc.open();
+          iframeDoc.write(html + css + js);
+          iframeDoc.close();
 
-    fileTree.addEventListener('click', (event) => {
-        if (event.target.classList.contains('close-btn')) {
-            event.target.parentElement.remove();
-        }
-    });
+          output.contentWindow.onerror = (message, source, lineno, colno, error) => {
+              consoleElement.innerHTML += `<div class="log error">Error: ${message} (Line ${lineno})</div>`;
+          };
+      } catch (error) {
+          console.error('Execution error:', error);
+      } finally {
+          loader.style.display = 'none';
+      }
+  });
+
+  document.getElementById('fullscreen').addEventListener('click', () => {
+      const elem = document.querySelector('.outputscreen');
+      if (!document.fullscreenElement) {
+          elem.requestFullscreen().catch(console.error);
+      } else {
+          document.exitFullscreen();
+      }
+  });
+
+  // Auto-save and line numbers
+  const updateLineNumbers = (editor) => {
+      const lines = editor.value.split('\n').length;
+      editor.previousElementSibling.innerHTML = 
+          Array(lines).fill().map((_, i) => i + 1).join('<br>');
+  };
+
+  ['html', 'css', 'js'].forEach(type => {
+      const editor = document.getElementById(`${type}-editor`);
+      editor.addEventListener('input', () => {
+          saveCurrentFile();
+          updateLineNumbers(editor);
+      });
+  });
+
+  // Initial setup
+  renderFileTree();
+  clearEditors();
 });
