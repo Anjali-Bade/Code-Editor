@@ -1,75 +1,61 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Code Editor</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
-</head>
-<body>
-  <div class="editor-container">
-    <div class="sidebar">
-      <div class="sidebar-header">
-        <h3>EXPLORER</h3>
-      </div>
-      <div class="file-explorer">
-        <div class="folder">
-          <div class="folder-name">
-            <span class="folder-icon">📁</span>
-            <span>Project</span>
-          </div>
-          <div class="files">
-            <div class="file active">
-              <span class="file-icon">📄</span>
-              <span>index.html</span>
-            </div>
-            <div class="file">
-              <span class="file-icon">📄</span>
-              <span>style.css</span>
-            </div>
-            <div class="file">
-              <span class="file-icon">📄</span>
-              <span>script.js</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="main-content">
-      <div class="tabs">
-        <div class="tab active">
-          <span>index.html</span>
-          <button class="close-btn">×</button>
-        </div>
-        <div class="tab">
-          <span>style.css</span>
-          <button class="close-btn">×</button>
-        </div>
-      </div>
-      <div class="editor-wrapper">
-        <textarea id="code-editor"></textarea>
-      </div>
-      <div class="status-bar">
-        <div class="status-left">
-          <span class="language-mode">HTML</span>
-          <span class="encoding">UTF-8</span>
-        </div>
-        <div class="status-right">
-          <span class="line-col">Ln 1, Col 1</span>
-          <span class="indent-type">Spaces: 2</span>
-        </div>
-      </div>
-    </div>
-  </div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Editor logo</title>
+    <style>
+         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            /* background-color:; */
+            color: grey;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-image:url("      https://img.freepik.com/free-vector/matrix-style-binary-code-digital-falling-numbers-blue-background_1017-37387.jpg");
+            background-size:100%,100%;
+            height:500px;
+           backdrop-filter: blur(3px);
+         }
+         .img1{
+            height:290px;
+            width:100%;
+            border-radius:150px;
+         }
+         .h2{
+            font-size:15rem;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+         } 
+         h2{
+           color:transparent;
+           -webkit-text-stroke:1px rgb(243, 238, 239);
+           font-size:50px;
+           position:relative;
+         }
+         h2::before{
+            content:"Samayanstra Code Editior";
+            position: absolute;
+            width:0%;
+            height:50%;
+            overflow:hidden;
+            color:rgb(199, 106, 146);
+            transition: 1s ease-in-out;
+         }
+         h2:hover::before{
+            width:24%;
+         }
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/htmlmixed/htmlmixed.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/css/css.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/javascript/javascript.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/clike/clike.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+        </style>
+        </head>
+        <body>
+
+           <a href="logo.html"> <img src="samayanstr.png"class="img1"></a>
+            <h2 class="text1">Samayanstra Code Editior</h2>
+        </body>
+        </html>
