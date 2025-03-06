@@ -1,8 +1,8 @@
-# 🚀 Samanyastra Code Editor  
+ Samanyastra Code Editor  
 
-## 📌 Batch: A18  
+ Batch: A18  
 
-### 👨‍💻 Team Members  
+ 👨‍💻 Team Members  
 | Name              | Email ID                          |  
 |------------------|--------------------------------|  
 | Khedkar Mukund  | mkhedkar9373@gmail.com          |  
