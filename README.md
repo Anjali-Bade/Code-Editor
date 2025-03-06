@@ -13,7 +13,7 @@
 | Bade Anjali     | badeanjali41@gmail.com          |  
 
 ## Project Links  
-**Netlify Link :** [Netlify Deployment](https://chimerical-gumption15ee6a.netlify.app/)  
+**Netlify Link :** [Netlify Deployment](https://chimerical-gumption-15ee6a.netlify.app/  )  
 **GitHub Repository Link :** [GitHub Repository](https://github.com/Anjali-Bade/Code-Editor.git)  
 
 ---
